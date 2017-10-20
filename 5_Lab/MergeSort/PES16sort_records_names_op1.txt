@@ -1,0 +1,10 @@
+CS012 Aarti 9.9
+CS002 Adithya 9.78
+CS001 Adithya 9.58
+CS006 Darshan 9.88
+CS010 Gautham 9.94
+CS050 Karthik 9.71
+CS200 Mohit 9.93
+CS005 Mouli 9.94
+CS020 Sneha 9.94
+CS003 Vinay 10

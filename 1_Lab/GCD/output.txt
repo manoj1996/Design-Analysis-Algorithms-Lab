@@ -1,0 +1,6 @@
+12
+1
+60
+123
+123
+Execution time : 0.037329 milliseconds

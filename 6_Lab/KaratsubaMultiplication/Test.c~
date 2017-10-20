@@ -1,0 +1,162 @@
+#include<string.h>
+#include<math.h>
+#include<stdio.h>
+#include<stdlib.h>
+
+char* add(char a[], char b[]);
+char* sub(char a[], char b[]);
+void appendZeroes(char a[], char b[]);
+char* powerOfTen(char p[], int m);
+
+int main()
+{	
+	char x[6] = {'1', '8', '3', '7', '6', '\0'};
+	char y[6] = {'1', '7', '9', '9', '9'};
+	char z[8] = {'0', '0', '0', '0', '0', '0', '0', '7'};
+
+	printf("Check : %s\n", powerOfTen(sub(sub(x, y), z), 3));
+	printf("Diff : %s\n", sub(x, y));
+//	printf("Sum : %s\n", add(x, y));
+
+//	printf("Power : %s\n", powerOfTen(p1, 10));
+	return 0;
+}
+
+char* sub(char a[], char b[])
+{
+	int i, j, x;
+	int l;
+	char* temp = malloc(sizeof(char) * strlen(a));
+	l = strlen(a);
+	//printf("l : %d\n", l);//db
+	char* c = malloc(sizeof(char) * (l));
+	int borrow;
+	
+	//moving a into temp since the array a[] (now temp) has to be modified while considering a borrow
+	strcpy(temp, a);
+		
+	for(i = l - 1; i >= 0 ; i --)
+	{
+		x = 0;
+		if(temp[i] < b[i])
+		{
+			borrow = 1;
+			j = temp[i - 1] - '0';
+			j -= 1;
+			j += '0';
+			temp[i - 1] = j;
+			x = pow(10, borrow) + (temp[i] - '0') - (b[i] - '0');
+		}
+		else
+			x = (temp[i] - '0') - (b[i] - '0');
+		
+		//printf("x : %d\n", x);//db
+	
+		c[i] = x + '0';
+		
+		//printf("c[%d] : %c\n", i, c[i]);//db
+	}
+	
+	char* hack = malloc(sizeof(char) * strlen(c));
+	for(i = 0; i < strlen(c); i++)
+		hack[i] = i + '0';
+	appendZeroes(c, hack);
+	//printf("c : %s\n", c);//db
+	return c;
+}
+
+char* powerOfTen(char p[], int m)
+{
+	int i, j;
+	char* res = malloc(sizeof(char) * (strlen(p) + m));
+	
+	for(i = 0; i < strlen(p); i++)
+		res[i] = p[i];
+	for(j = 0; j < m; j++)
+		res[i++] = '0';
+	
+	return res;
+}
+
+void appendZeroes(char a[], char b[])
+{
+	int l1, l2;
+	int l;
+	int i, j, k;
+	
+	l1 = strlen(a);	//strlen in printf requires format specifier %zu
+	l2 = strlen(b);
+	
+	l1 > l2 ? (l = l1) : (l = l2);
+
+	i = 1;
+	while(i < l)
+	{
+		i *= 2;	
+	}
+	
+	l = i;
+
+	char* tempA = malloc(sizeof(char) * l);
+	char* tempB = malloc(sizeof(char) * l);
+	
+	for(i = 0; i < l - l1; i++)
+		tempA[i] = '0';
+	
+	k = 0;
+	for(j = i; j < l; j ++)
+		tempA[j] = a[k ++];
+	
+	
+	for(i = 0; i < l - l2; i ++)
+		tempB[i] = '0';
+	
+	k = 0;
+	for(j = i; j < l; j ++)
+		tempB[j] = b[k ++];
+	
+	for(i = 0; i < l; i++)
+	{
+		a[i] = tempA[i];
+		b[i] = tempB[i];
+	}
+}
+
+char* add(char a[], char b[])
+{
+	int i, j, x;
+	int l;
+	l = strlen(a);
+	printf("l : %d\n", l);//db
+	char* c = malloc(sizeof(char) * (l + 1));
+	int carry = 0;
+	
+	for(i = l; i >= 0 ; i --)
+	{
+		if(i == 0)
+			c[i] = carry + '0';
+		else
+		{
+			x = 0;
+			j = i - 1;
+			x = (a[j] - '0') + (b[j] - '0') + carry;
+			//printf("x : %d\n", x);//db
+		
+			if(x > 9)
+			{
+				carry = x / 10;
+				x = x % 10;
+			}
+		
+			c[i] = x + '0';
+		}
+		
+		printf("c[%d] : %c\n", i, c[i]);//db
+	}
+	
+	char* hack = malloc(sizeof(char) * strlen(c));
+	for(i = 0; i < strlen(c); i++)
+		hack[i] = i + '0';
+	appendZeroes(c, hack);
+	return c;
+}

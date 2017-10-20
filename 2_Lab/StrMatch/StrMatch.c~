@@ -1,0 +1,65 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<time.h>
+
+int match();
+double execTime(struct timespec start, struct timespec end);
+
+int main(void)
+{
+	int numLines;
+	struct timespec start, end;
+	
+	scanf("%d", &numLines);
+	
+	clock_gettime(CLOCK_REALTIME, &start);
+
+	while(numLines --)
+	{
+		printf("%d\n", match());
+	}
+
+	clock_gettime(CLOCK_REALTIME, &end);
+	
+	printf("Execution time : %lf ms\n", execTime(start, end));
+
+	return 0;
+}
+
+int match()
+{	
+	char * line = malloc(sizeof(char) * 1000001);	//number of characters + 1 (for \0)
+	char * toSearch = malloc(sizeof(char) * 1000001);
+	int lenLine;
+	int lenToSearch;
+	int i;
+	int j;
+	
+	scanf(" %[^\n]", line);
+	lenLine = strlen(line);
+	
+	scanf(" %[^\n]", toSearch);
+	lenToSearch = strlen(toSearch);
+	
+	for(i = 0; i < lenLine - lenToSearch; i ++)
+	{
+		j = 0;
+		while(j < lenToSearch && toSearch[j] == line[i + j])
+		{
+			j ++;
+		}
+		
+		if(j == lenToSearch)
+			return i;
+	}
+	return -1;
+}
+
+double execTime(struct timespec start, struct timespec end)
+{
+	double t;
+	t = (end.tv_sec - start.tv_sec) * 1000;
+	t += (end.tv_nsec - start.tv_nsec) * 0.000001;
+	return t;
+}

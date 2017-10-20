@@ -1,0 +1,11 @@
+CS001 Adithya 95
+CS002 Adithya 97
+CS003 Vinay 100
+CS005 Mouli 99
+CS006 Darshan 98
+CS010 Gautham 99
+CS012 Aarti 99
+CS020 Sneha 99
+CS050 Karthik 97
+CS200 Mohit 99
+
